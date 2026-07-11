@@ -25,6 +25,10 @@ class Config:
         else:
             SQLALCHEMY_DATABASE_URI = SQLITE_URI
 
+    # Some providers hand out postgres:// URIs; newer SQLAlchemy requires postgresql://
+    if SQLALCHEMY_DATABASE_URI and SQLALCHEMY_DATABASE_URI.startswith("postgres://"):
+        SQLALCHEMY_DATABASE_URI = SQLALCHEMY_DATABASE_URI.replace("postgres://", "postgresql://", 1)
+
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     # Security simulation settings

@@ -48,8 +48,16 @@ limiter = Limiter(
 )
 limiter.init_app(app)
 
-# Restrict CORS to only http://localhost:5173 and http://localhost:80 (No wildcards)
-CORS(app, resources={r"/api/*": {"origins": ["http://localhost:5173", "http://localhost:80"]}},
+# Restrict CORS to explicitly allowed origins (No wildcards).
+# Set CORS_ORIGINS as a comma-separated list in production (e.g. your deployed frontend URL).
+# Falls back to local dev defaults if not set.
+_cors_origins_env = os.environ.get('CORS_ORIGINS')
+if _cors_origins_env:
+    ALLOWED_ORIGINS = [o.strip() for o in _cors_origins_env.split(',') if o.strip()]
+else:
+    ALLOWED_ORIGINS = ["http://localhost:5173", "http://localhost:80"]
+
+CORS(app, resources={r"/api/*": {"origins": ALLOWED_ORIGINS}},
      methods=["GET", "POST", "PUT", "DELETE"],
      allow_headers=["Content-Type", "Authorization"])
 
@@ -1400,14 +1408,14 @@ def get_mitre_mapping(current_user):
 # ==========================================
 MALICIOUS_IPS = ['185.220.101.5', '45.143.203.48', '91.240.118.22', '103.224.182.250', '82.102.23.41']
 
+initial_setup()
+
+if app.config['SIMULATOR_ENABLED']:
+    from simulator import SecuritySimulator
+    simulator = SecuritySimulator(app)
+    simulator.start()
+
 if __name__ == '__main__':
-    initial_setup()
-    
-    if app.config['SIMULATOR_ENABLED']:
-        from simulator import SecuritySimulator
-        simulator = SecuritySimulator(app)
-        simulator.start()
-        
     try:
         app.run(host='0.0.0.0', port=5000, debug=False)
     finally:

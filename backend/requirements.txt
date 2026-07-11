@@ -10,3 +10,4 @@ python-dotenv==1.0.1
 Flask-Limiter==3.7.0
 limits==3.12.0
 requests==2.31.0
+gunicorn==22.0.0
