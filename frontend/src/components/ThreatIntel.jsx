@@ -1,3 +1,4 @@
+import { API_URL } from '../config';
 import React, { useEffect, useState } from 'react';
 import { 
   Search, 
@@ -31,7 +32,7 @@ export default function ThreatIntel({ token, user }) {
 
   const fetchIndicators = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/threat-intel/indicators', {
+      const response = await fetch(API_URL + '/api/threat-intel/indicators', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await response.json();
@@ -74,7 +75,7 @@ export default function ThreatIntel({ token, user }) {
     }
 
     try {
-      const response = await fetch('http://localhost:5000/api/threat-intel/indicators', {
+      const response = await fetch(API_URL + '/api/threat-intel/indicators', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

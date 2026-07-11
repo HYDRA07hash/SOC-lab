@@ -1,3 +1,4 @@
+import { API_URL } from './config';
 import React, { useState, useEffect } from 'react';
 import Sidebar from './components/Sidebar';
 import Login from './components/Login';
@@ -21,7 +22,7 @@ export default function App() {
   const fetchNotifications = async () => {
     if (!token) return;
     try {
-      const response = await fetch('http://localhost:5000/api/notifications', {
+      const response = await fetch(API_URL + '/api/notifications', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await response.json();
@@ -54,7 +55,7 @@ export default function App() {
 
   const handleClearNotifications = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/notifications/read-all', {
+      const response = await fetch(API_URL + '/api/notifications/read-all', {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -69,7 +70,7 @@ export default function App() {
   // Cohesive Escalation: Raise Incident from Alert
   const handleRaiseIncidentFromAlert = async (alert) => {
     try {
-      const response = await fetch('http://localhost:5000/api/incidents', {
+      const response = await fetch(API_URL + '/api/incidents', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

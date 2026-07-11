@@ -1,3 +1,4 @@
+import { API_URL } from '../config';
 import React, { useEffect, useState } from 'react';
 import { 
   ShieldAlert, 
@@ -56,27 +57,27 @@ export default function Dashboard({ token }) {
         const headers = { 'Authorization': `Bearer ${token}` };
         
         // Fetch stats
-        const resStats = await fetch('http://localhost:5000/api/dashboard/stats', { headers });
+        const resStats = await fetch(API_URL + '/api/dashboard/stats', { headers });
         const dataStats = await resStats.json();
         setStats(dataStats);
         
         // Fetch trends
-        const resTrends = await fetch('http://localhost:5000/api/dashboard/threat-trends', { headers });
+        const resTrends = await fetch(API_URL + '/api/dashboard/threat-trends', { headers });
         const dataTrends = await resTrends.json();
         setTrends(dataTrends);
         
         // Fetch attack types
-        const resTypes = await fetch('http://localhost:5000/api/dashboard/attack-types', { headers });
+        const resTypes = await fetch(API_URL + '/api/dashboard/attack-types', { headers });
         const dataTypes = await resTypes.json();
         setAttackTypes(dataTypes);
         
         // Fetch attack map events
-        const resMap = await fetch('http://localhost:5000/api/dashboard/attack-map', { headers });
+        const resMap = await fetch(API_URL + '/api/dashboard/attack-map', { headers });
         const dataMap = await resMap.json();
         setMapEvents(dataMap);
         
         // Fetch timeline
-        const resTimeline = await fetch('http://localhost:5000/api/dashboard/timeline', { headers });
+        const resTimeline = await fetch(API_URL + '/api/dashboard/timeline', { headers });
         const dataTimeline = await resTimeline.json();
         setTimeline(dataTimeline);
         

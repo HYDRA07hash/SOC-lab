@@ -1,3 +1,4 @@
+import { API_URL } from '../config';
 import React, { useEffect, useState } from 'react';
 import { 
   TableProperties, 
@@ -64,7 +65,7 @@ export default function MitreMatrix({ token }) {
 
   const fetchMitreData = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/dashboard/mitre-stats', {
+      const res = await fetch(API_URL + '/api/dashboard/mitre-stats', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await res.json();

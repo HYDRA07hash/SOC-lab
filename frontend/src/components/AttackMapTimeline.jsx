@@ -1,3 +1,4 @@
+import { API_URL } from '../config';
 import React, { useEffect, useState } from 'react';
 import { 
   Globe, 
@@ -30,11 +31,11 @@ export default function AttackMapTimeline({ token }) {
   const fetchMapData = async () => {
     try {
       const headers = { 'Authorization': `Bearer ${token}` };
-      const resStats = await fetch('http://localhost:5000/api/dashboard/countries-stats', { headers });
+      const resStats = await fetch(API_URL + '/api/dashboard/countries-stats', { headers });
       const dataStats = await resStats.json();
       setCountriesStats(dataStats);
       
-      const resMap = await fetch('http://localhost:5000/api/dashboard/attack-map', { headers });
+      const resMap = await fetch(API_URL + '/api/dashboard/attack-map', { headers });
       const dataMap = await resMap.json();
       setMapEvents(dataMap);
     } catch (err) {
@@ -46,7 +47,7 @@ export default function AttackMapTimeline({ token }) {
   const fetchTimelineData = async () => {
     try {
       const headers = { 'Authorization': `Bearer ${token}` };
-      let url = 'http://localhost:5000/api/dashboard/timeline-events';
+      let url = API_URL + '/api/dashboard/timeline-events';
       
       const params = [];
       if (filterCategory) params.push(`category=${filterCategory}`);

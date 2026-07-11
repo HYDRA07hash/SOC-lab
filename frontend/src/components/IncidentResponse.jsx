@@ -1,3 +1,4 @@
+import { API_URL } from '../config';
 import React, { useEffect, useState } from 'react';
 import { 
   Briefcase, 
@@ -32,7 +33,7 @@ export default function IncidentResponse({ token, user }) {
   const fetchIncidents = async () => {
     try {
       const headers = { 'Authorization': `Bearer ${token}` };
-      const res = await fetch('http://localhost:5000/api/incidents', { headers });
+      const res = await fetch(API_URL + '/api/incidents', { headers });
       const data = await res.json();
       setIncidents(data);
       if (data.length > 0) {
@@ -52,7 +53,7 @@ export default function IncidentResponse({ token, user }) {
   const fetchUsers = async () => {
     try {
       const headers = { 'Authorization': `Bearer ${token}` };
-      const res = await fetch('http://localhost:5000/api/auth/users', { headers });
+      const res = await fetch(API_URL + '/api/auth/users', { headers });
       const data = await res.json();
       setUsers(data);
     } catch (err) {
@@ -83,7 +84,7 @@ export default function IncidentResponse({ token, user }) {
     if (!newTitle.strip()) return;
 
     try {
-      const response = await fetch('http://localhost:5000/api/incidents', {
+      const response = await fetch(API_URL + '/api/incidents', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

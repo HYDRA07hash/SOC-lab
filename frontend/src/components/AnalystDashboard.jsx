@@ -1,3 +1,4 @@
+import { API_URL } from '../config';
 import React, { useEffect, useState } from 'react';
 import { 
   Activity, 
@@ -46,7 +47,7 @@ export default function AnalystDashboard({ token }) {
   useEffect(() => {
     const fetchAnalystData = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/analyst/stats', {
+        const response = await fetch(API_URL + '/api/analyst/stats', {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         const data = await response.json();

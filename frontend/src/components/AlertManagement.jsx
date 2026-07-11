@@ -1,3 +1,4 @@
+import { API_URL } from '../config';
 import React, { useEffect, useState } from 'react';
 import { 
   AlertTriangle, 
@@ -19,7 +20,7 @@ export default function AlertManagement({ token, onRaiseIncident }) {
   const fetchAlerts = async () => {
     try {
       const headers = { 'Authorization': `Bearer ${token}` };
-      let url = 'http://localhost:5000/api/alerts';
+      let url = API_URL + '/api/alerts';
       
       const params = [];
       if (severityFilter) params.push(`severity=${severityFilter}`);
@@ -68,7 +69,7 @@ export default function AlertManagement({ token, onRaiseIncident }) {
 
   const handleBulkAcknowledge = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/alerts/bulk-acknowledge', {
+      const response = await fetch(API_URL + '/api/alerts/bulk-acknowledge', {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` }
       });

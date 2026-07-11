@@ -1,3 +1,4 @@
+import { API_URL } from '../config';
 import React, { useEffect, useState } from 'react';
 import { 
   Terminal, 
@@ -26,7 +27,7 @@ export default function LogExplorer({ token }) {
   const fetchLogs = async () => {
     try {
       const headers = { 'Authorization': `Bearer ${token}` };
-      let url = 'http://localhost:5000/api/logs';
+      let url = API_URL + '/api/logs';
       
       const params = [];
       if (sourceFilter) params.push(`source=${sourceFilter}`);
@@ -47,7 +48,7 @@ export default function LogExplorer({ token }) {
 
   const fetchReports = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/reports', {
+      const res = await fetch(API_URL + '/api/reports', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await res.json();
@@ -71,7 +72,7 @@ export default function LogExplorer({ token }) {
     e.preventDefault();
     setReportGenerating(true);
     try {
-      const response = await fetch('http://localhost:5000/api/reports/generate', {
+      const response = await fetch(API_URL + '/api/reports/generate', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

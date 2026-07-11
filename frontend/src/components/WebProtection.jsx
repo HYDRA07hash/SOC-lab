@@ -1,3 +1,4 @@
+import { API_URL } from '../config';
 import React, { useEffect, useState } from 'react';
 import { 
   Globe, 
@@ -70,7 +71,7 @@ export default function WebProtection({ token }) {
   useEffect(() => {
     const fetchWebAlerts = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/alerts', {
+        const response = await fetch(API_URL + '/api/alerts', {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         const data = await response.json();

@@ -1,3 +1,4 @@
+import { API_URL } from '../config';
 import React, { useEffect, useState } from 'react';
 import { 
   Settings as SettingsIcon, 
@@ -24,7 +25,7 @@ export default function Settings({ token, user }) {
   const fetchSimulatorSettings = async () => {
     try {
       const headers = { 'Authorization': `Bearer ${token}` };
-      const res = await fetch('http://localhost:5000/api/settings/simulator', { headers });
+      const res = await fetch(API_URL + '/api/settings/simulator', { headers });
       const data = await res.json();
       setSimEnabled(data.enabled);
       setSimInterval(data.interval);
@@ -36,7 +37,7 @@ export default function Settings({ token, user }) {
   const fetchUsers = async () => {
     try {
       const headers = { 'Authorization': `Bearer ${token}` };
-      const res = await fetch('http://localhost:5000/api/auth/users', { headers });
+      const res = await fetch(API_URL + '/api/auth/users', { headers });
       const data = await res.json();
       setUsersList(data);
     } catch (err) {
@@ -57,7 +58,7 @@ export default function Settings({ token, user }) {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}` 
       };
-      const response = await fetch('http://localhost:5000/api/settings/simulator', {
+      const response = await fetch(API_URL + '/api/settings/simulator', {
         method: 'POST',
         headers,
         body: JSON.stringify({ enabled: !simEnabled, interval: simInterval })
@@ -78,7 +79,7 @@ export default function Settings({ token, user }) {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}` 
       };
-      const response = await fetch('http://localhost:5000/api/settings/simulator', {
+      const response = await fetch(API_URL + '/api/settings/simulator', {
         method: 'POST',
         headers,
         body: JSON.stringify({ enabled: simEnabled, interval: parseInt(interval) })
@@ -102,7 +103,7 @@ export default function Settings({ token, user }) {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}` 
       };
-      const response = await fetch('http://localhost:5000/api/settings/simulator/trigger', {
+      const response = await fetch(API_URL + '/api/settings/simulator/trigger', {
         method: 'POST',
         headers,
         body: JSON.stringify({ category })

@@ -1,3 +1,4 @@
+import { API_URL } from '../config';
 import React, { useEffect, useState } from 'react';
 import { 
   ShieldAlert, 
@@ -58,33 +59,33 @@ export default function ExecutiveDashboard({ token }) {
         const headers = { 'Authorization': `Bearer ${token}` };
         
         // Fetch stats
-        const resStats = await fetch('http://localhost:5000/api/dashboard/stats', { headers });
+        const resStats = await fetch(API_URL + '/api/dashboard/stats', { headers });
         const dataStats = await resStats.json();
         setStats(dataStats);
         
         // Fetch posture history
-        const resHistory = await fetch('http://localhost:5000/api/dashboard/posture-history', { headers });
+        const resHistory = await fetch(API_URL + '/api/dashboard/posture-history', { headers });
         const dataHistory = await resHistory.json();
         setPostureHistory(dataHistory);
         
         // Fetch country stats
-        const resCountries = await fetch('http://localhost:5000/api/dashboard/countries-stats', { headers });
+        const resCountries = await fetch(API_URL + '/api/dashboard/countries-stats', { headers });
         const dataCountries = await resCountries.json();
         setCountryStats(dataCountries);
         
         // Fetch incidents
-        const resIncidents = await fetch('http://localhost:5000/api/incidents', { headers });
+        const resIncidents = await fetch(API_URL + '/api/incidents', { headers });
         const dataIncidents = await resIncidents.json();
         // filter critical/high active incidents
         setCriticalIncidents(dataIncidents.filter(i => i.severity === 'Critical' && i.status !== 'Closed').slice(0, 5));
         
         // Fetch analyst stats for SLA
-        const resAnalyst = await fetch('http://localhost:5000/api/analyst/stats', { headers });
+        const resAnalyst = await fetch(API_URL + '/api/analyst/stats', { headers });
         const dataAnalyst = await resAnalyst.json();
         setAnalystKPIs(dataAnalyst);
         
         // Fetch top blocklist IPs
-        const resIntel = await fetch('http://localhost:5000/api/threat-intel/indicators', { headers });
+        const resIntel = await fetch(API_URL + '/api/threat-intel/indicators', { headers });
         const dataIntel = await resIntel.json();
         setTopIPs(dataIntel.filter(i => i.indicator_type === 'IP').slice(0, 5));
         

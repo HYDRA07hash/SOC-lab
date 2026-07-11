@@ -1,3 +1,4 @@
+import { API_URL } from '../config';
 import React, { useEffect, useState } from 'react';
 import { 
   ShieldAlert, 
@@ -19,7 +20,7 @@ export default function IDS({ token }) {
         const headers = { 'Authorization': `Bearer ${token}` };
         
         // Fetch alerts
-        const resAlerts = await fetch('http://localhost:5000/api/alerts', { headers });
+        const resAlerts = await fetch(API_URL + '/api/alerts', { headers });
         const dataAlerts = await resAlerts.json();
         
         // Filter alerts relevant to IDS (Brute Force, Port Scan, Malicious IP)
@@ -27,7 +28,7 @@ export default function IDS({ token }) {
         setIdsAlerts(dataAlerts.filter(a => idsCategories.includes(a.category)));
         
         // Fetch MITRE mapping
-        const resMitre = await fetch('http://localhost:5000/api/settings/mitre', { headers });
+        const resMitre = await fetch(API_URL + '/api/settings/mitre', { headers });
         const dataMitre = await resMitre.json();
         setMitreMapping(dataMitre);
         

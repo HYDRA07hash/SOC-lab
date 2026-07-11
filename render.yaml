@@ -1,0 +1,41 @@
+services:
+  # 1. Flask Backend Web Service
+  - type: web
+    name: sentinelshield-backend
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python app.py
+    rootDir: backend
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: sentinelshield-db
+          property: connectionString
+      - key: USE_POSTGRES
+        value: "true"
+      - key: SIMULATOR_ENABLED
+        value: "true"
+      - key: SIMULATOR_INTERVAL
+        value: "5"
+
+  # 2. React Frontend Static Site
+  - type: web
+    name: sentinelshield-frontend
+    env: static
+    buildCommand: npm install && npm run build
+    publishDir: dist
+    rootDir: frontend
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          name: sentinelshield-backend
+          value: url
+
+# 3. PostgreSQL Database Service
+databases:
+  - name: sentinelshield-db
+    plan: free
