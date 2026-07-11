@@ -24,7 +24,7 @@ services:
 
   # 2. React Frontend Static Site
   - type: web
-    name: sentinelshield-frontend
+    name: soc-lab
     env: static
     buildCommand: npm install && npm run build
     publishDir: dist
