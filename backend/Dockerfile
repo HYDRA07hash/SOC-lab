@@ -23,8 +23,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the rest of the application code
 COPY . .
 
-# Expose backend port
+# Expose backend port (default; Render overrides via $PORT at runtime)
 EXPOSE 5000
 
-# Start backend server
-CMD ["python", "app.py"]
+# Start backend server with gunicorn (production WSGI server)
+# Uses shell form so $PORT env var (set by Render) is expanded at runtime
+CMD gunicorn app:app --bind 0.0.0.0:${PORT:-5000}
